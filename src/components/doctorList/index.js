@@ -20,7 +20,7 @@ function DoctorList({ isOpen, selectedItems, filteredItems, openItems, handleSet
     return (
         <>
             <div className={classes.logo}>
-                <img src="joovence-logo.png" width="70%" />
+                <img src="joovence-logo.png" alt="logo" width="70%" />
             </div>
             <Search
                 isOpen={isOpen}

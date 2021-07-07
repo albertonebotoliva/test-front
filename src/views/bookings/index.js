@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Card, CardContent, Typography } from '@material-ui/core';
 import moment from 'moment';
@@ -23,13 +23,13 @@ const useStyles = makeStyles({
 
 function Bookings() {
     const [booking, setBooking] = useState({});
-
-    React.useEffect(() => {
-        setBooking(JSON.parse(window.localStorage.getItem("booking")));
-    }, [])
     const classes = useStyles();
 
-    const { address } = booking.doctor && booking.doctor[0] || {};
+    useEffect(() => setBooking(JSON.parse(window.localStorage.getItem("booking"))), []);
+
+    const address = booking.doctor && booking.doctor[0]
+        ? booking.doctor[0].address
+        : {};
 
     return (
         <Grid container spacing={3}>
@@ -37,7 +37,7 @@ function Bookings() {
             </Grid>
             <Grid item xs={12} md={6} className={classes.column}>
                 <div className={classes.logo}>
-                    <img src="joovence-logo.png" width="70%" />
+                    <img src="joovence-logo.png" alt="logo" width="70%" />
                 </div>
                 <Card className={classes.root}>
                     <CardContent>

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { reducer, initialState } from '../../stores';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,7 +52,7 @@ function Availabilities(props) {
         handleSubmit: withReducer(handleSubmit)
     });
 
-    React.useEffect(async () => withReducer(getAvailabilities)(), []);
+    useEffect(() => withReducer(getAvailabilities)(), []);
 
     return (
         <Grid container spacing={3} className={classes.content}>

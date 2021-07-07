@@ -34,7 +34,8 @@ export const getAvailabilities = (dispatch, state) => async () => {
     let formatedAvailabilities = [];
     const doctors = await doctorService.get();
     dispatch({ type: "set_items", items: doctors });
-    for (let i = 0; i < doctors.length; i++) {
+    for (let i = 0; i < 1; i++) {
+        // for (let i = 0; i < doctors.length; i++) {
         availabilities = await availabilityService.get(doctors[i]);
         formatedAvailabilities = availabilities.map((availability, index) => formatAvailability(availability.start, doctors[i].name, doctors[i].id))
         dispatch({ type: "set_events", events: formatedAvailabilities })

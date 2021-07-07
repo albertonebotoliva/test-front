@@ -11,6 +11,7 @@ function GenericDialog({ open, title, description, fields = [], handleChange, ha
                 </DialogContentText>
                 {fields.map((field, index) => (
                     <TextField
+                        key={index}
                         onChange={handleChange}
                         autoFocus={!index}
                         margin={field.margin}
