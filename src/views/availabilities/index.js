@@ -7,12 +7,19 @@ import BookingDialog from '../../components/layout/genericDialog';
 import BigCalendar from '../../components/layout/bigCalendar';
 import DoctorList from '../../components/doctorList';
 
-import { doctorService } from '../../services/doctor';
-import { bookingService } from '../../services/booking';
-import { availabilityService } from '../../services/availability';
-
-import { formatAvailability } from '../../helpers/format';
 import bookingDialogConfig from '../../config/bookingDialog';
+
+import {
+    setIsOpen,
+    setFilter,
+    handleOpenItems,
+    handleSetSelectedItem,
+    handleSelect,
+    handleClose,
+    handleChange,
+    handleSubmit,
+    getAvailabilities
+} from '../../stores/actions';
 
 import '../../App.css';
 
@@ -37,51 +44,15 @@ const useStyles = makeStyles({
 function Availabilities(props) {
     const classes = useStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
+    const withReducer = func => (...args) => func(dispatch, state, props)(...args);
 
-    React.useEffect(async () => {
-        const doctors = await doctorService.get();
-        dispatch({ type: "set_items", items: doctors });
-        let availabilities = [];
-        let allAvailabilities = [];
-        let formatedAvailabilities = [];
-        for (let i = 0; i < doctors.length; i++) {
-            availabilities = await availabilityService.get(doctors[i]);
-            formatedAvailabilities = availabilities.map((availability, index) => formatAvailability(availability.start, doctors[i].name, doctors[i].id))
-            dispatch({ type: "set_events", events: formatedAvailabilities })
-            allAvailabilities = allAvailabilities.concat(formatedAvailabilities);
-        }
-        dispatch({ type: "filter_events", filteredEvents: allAvailabilities });
-    }, []);
+    const bookingDialog = bookingDialogConfig({
+        handleChange: withReducer(handleChange),
+        handleClose: withReducer(handleClose),
+        handleSubmit: withReducer(handleSubmit)
+    });
 
-    const handleSelect = (event) => dispatch({ type: "set_dialog", dialog: { open: true, ...event, doctor: state.filteredItems.filter(item => item.id === event.id) } });
-
-    const handleSubmit = async () => {
-        try {
-            const booking = await bookingService.post(state.dialog.start, state.dialog.id);
-            if (booking.id) {
-                window.localStorage.setItem('booking', JSON.stringify(state.dialog));
-                dispatch({ type: "set_dialog", dialog: { open: false, start: null, end: null } });
-                props.history.push("/bookings");
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    const handleChange = (e) => dispatch({ type: "set_dialog", dialog: { ...state.dialog, [e.target.name]: e.target.value } })
-    const handleClose = () => dispatch({ type: "set_dialog", dialog: {} });
-    const bookingDialog = bookingDialogConfig({ handleChange, handleClose, handleSubmit });
-
-    const handleSetSelectedItem = async (item) => {
-        const filteredEvents = ((state.selectedItems[0] && state.selectedItems[0].id) === item.id)
-            ? state.events
-            : state.events.filter(event => event.id === item.id);
-        dispatch({ type: "set_selected_items", item });
-        return dispatch({ type: "filter_events", filteredEvents });
-    }
-    const handleOpenItems = (openItems, item) => dispatch({ type: "set_open_items", openItems: { ...openItems, [item.id]: !openItems[item.id] } })
-
-    const setFilter = e => dispatch({ type: "set_filter", filter: e.target.value });
-    const setIsOpen = isOpen => dispatch({ type: "set_is_open", isOpen: !isOpen });
+    React.useEffect(async () => withReducer(getAvailabilities)(), []);
 
     return (
         <Grid container spacing={3} className={classes.content}>
@@ -95,16 +66,16 @@ function Availabilities(props) {
                     openItems={state.openItems}
                     filteredItems={state.filteredItems}
                     selectedItems={state.selectedItems}
-                    handleSetSelectedItem={handleSetSelectedItem}
-                    handleOpenItems={handleOpenItems}
-                    setFilter={setFilter}
-                    setIsOpen={setIsOpen}
+                    handleSetSelectedItem={withReducer(handleSetSelectedItem)}
+                    handleOpenItems={withReducer(handleOpenItems)}
+                    setFilter={withReducer(setFilter)}
+                    setIsOpen={withReducer(setIsOpen)}
                 />
             </Grid>
             <Grid item xs={12} md={9} className={classes.column}>
                 <BigCalendar
                     events={state.filteredEvents}
-                    handleSelect={handleSelect}
+                    handleSelect={withReducer(handleSelect)}
                 />
             </Grid>
         </Grid>
