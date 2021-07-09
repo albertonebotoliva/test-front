@@ -14,6 +14,10 @@ For each instruction you decide on how the interface should look like.
 
 ## Instructions
 
+- To avoid CORS in your local environment using OSX
+
+  - open -n -a "Google Chrome" --args --user-data-dir=/tmp/temp_chrome_user_data_dir http://localhost:3000/ --disable-web-security 
+
 ### Doctors availabilities page
 
 - Create a page `/availabilities` to display the list of doctors and their availabilities.
