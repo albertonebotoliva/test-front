@@ -1,9 +1,9 @@
 const URL = "https://tech-test.joovence.dev/api";
 const bookingURL = `${URL}/bookings`;
+
 const bookingService = {
-    post: async (date, doctorId) => (
-        await fetch(bookingURL, {
-            crossDomain: true,
+    post: (date: string, doctorId: string): Promise<any> => (
+        fetch(bookingURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

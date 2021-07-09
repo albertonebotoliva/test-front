@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Search from '../layout/search';
 import Tree from '../layout/tree';
+import IDoctor from '../../interfaces/doctor';
 
 const useStyles = makeStyles({
     margin: {
@@ -14,7 +15,18 @@ const useStyles = makeStyles({
     }
 });
 
-function DoctorList({ isOpen, selectedItems, filteredItems, openItems, handleSetSelectedItem, handleOpenItems, setFilter, setIsOpen }) {
+interface IProps {
+    isOpen: boolean,
+    selectedItems: Array<IDoctor>,
+    filteredItems: Array<IDoctor>,
+    openItems: object,
+    handleSetSelectedItem: any,
+    handleOpenItems: any,
+    setFilter: any,
+    setIsOpen: any
+}
+
+function DoctorList({ isOpen, selectedItems, filteredItems, openItems, handleSetSelectedItem, handleOpenItems, setFilter, setIsOpen }: IProps): JSX.Element {
     const classes = useStyles();
 
     return (

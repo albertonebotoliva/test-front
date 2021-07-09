@@ -1,8 +1,9 @@
 const URL = "https://tech-test.joovence.dev/api";
 const doctorURL = `${URL}/doctors`;
+
 const doctorService = {
-    get: async () => (
-        await fetch(doctorURL, {
+    get: (): Promise<any> => (
+        fetch(doctorURL, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

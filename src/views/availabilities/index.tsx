@@ -41,12 +41,12 @@ const useStyles = makeStyles({
     }
 });
 
-function Availabilities(props) {
+function Availabilities(props: any): JSX.Element {
     const classes = useStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
-    const withReducer = func => (...args) => func(dispatch, state, props)(...args);
+    const withReducer = (fn: any) => (...args: any) => fn(dispatch, state, props)(...args);
 
-    const bookingDialog = bookingDialogConfig({
+    const bookingDialog: any = bookingDialogConfig({
         handleChange: withReducer(handleChange),
         handleClose: withReducer(handleClose),
         handleSubmit: withReducer(handleSubmit)

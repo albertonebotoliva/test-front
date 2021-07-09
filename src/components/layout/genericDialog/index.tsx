@@ -1,7 +1,17 @@
 import React from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 
-function GenericDialog({ open, title, description, fields = [], handleChange, handleSubmit, handleClose }) {
+interface IProps {
+    open: boolean,
+    title: string,
+    description: string,
+    fields: Array<any>,
+    handleChange: any,
+    handleSubmit: any,
+    handleClose: any
+}
+
+function GenericDialog({ open, title, description, fields = [], handleChange, handleSubmit, handleClose }: IProps): JSX.Element {
     return (
         <Dialog open={open} onClose={() => "handleClose"} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">{title}</DialogTitle>
@@ -9,7 +19,7 @@ function GenericDialog({ open, title, description, fields = [], handleChange, ha
                 <DialogContentText>
                     {description}
                 </DialogContentText>
-                {fields.map((field, index) => (
+                {fields.map((field: any, index: number) => (
                     <TextField
                         key={index}
                         onChange={handleChange}

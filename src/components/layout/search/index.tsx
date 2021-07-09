@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Icon, IconButton, InputBase, Paper, Chip } from '@material-ui/core';
 import useDebounce from './../../../hooks';
+import IDoctor from '../../../interfaces/doctor';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +30,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Search({ isOpen, setFilter, setIsOpen, selectedItems }) {
+interface IProps {
+    isOpen: boolean,
+    setFilter: any,
+    setIsOpen: any,
+    selectedItems: Array<IDoctor>
+}
+
+export default function Search({ isOpen, setFilter, setIsOpen, selectedItems }: IProps): JSX.Element {
     const classes = useStyles();
     const onChange = useDebounce(setFilter);
 

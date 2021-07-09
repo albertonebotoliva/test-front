@@ -1,4 +1,10 @@
-const config = ({ handleClose, handleChange, handleSubmit }) => ({
+interface IProps {
+    handleClose: any,
+    handleChange: any,
+    handleSubmit: any
+}
+
+const config = ({ handleClose, handleChange, handleSubmit }: IProps) => ({
     title: "Book a doctor!",
     description: "Please enter your contact information here to create a 1 hour appointment with the doctor.",
     open: false,

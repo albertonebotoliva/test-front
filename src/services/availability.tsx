@@ -1,8 +1,9 @@
 const URL = "https://tech-test.joovence.dev/api";
 const availabilityURL = `${URL}/availabilities?doctorId=`;
+
 const availabilityService = {
-    get: async item => (
-        await fetch(availabilityURL + item.id, {
+    get: (item: any): Promise<any> => (
+        fetch(availabilityURL + item.id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
