@@ -48,7 +48,7 @@ type Action =
     | { type: 'set_is_open', isOpen: boolean }
     | { type: 'set_filter', filter: string }
     | { type: 'set_selected_items', item: IDoctor, filter: string }
-    | { type: 'set_open_items', openItems: Array<IDoctor> }
+    | { type: 'set_open_items', openItems: object }
     | { type: 'set_dialog', dialog: Dialog }
     | { type: 'set_events', events: Array<IAvailability> }
     | { type: 'filter_events', filteredEvents: Array<IAvailability> }

@@ -36,9 +36,9 @@ export const getAvailabilities = (dispatch: any, state: any) => async () => {
     let formatedAvailabilities = [];
     const doctors = await doctorService.get();
     dispatch({ type: "set_items", items: doctors });
-    for (let i = 0; i < doctors.length; i++) { //TODO: uncomment
+    for (let i = 0; i < doctors.length; i++) {
         availabilities = await availabilityService.get(doctors[i]);
-        formatedAvailabilities = availabilities.map((availability: IAvailability, index: number) => formatAvailability(availability.start, doctors[i].name, doctors[i].id))
+        formatedAvailabilities = availabilities.map((availability: IAvailability, index: number) => formatAvailability(new Date(availability.start).toDateString(), doctors[i].name, doctors[i].id))
         dispatch({ type: "set_events", events: formatedAvailabilities })
         allAvailabilities = allAvailabilities.concat(formatedAvailabilities);
     }

@@ -1,6 +1,7 @@
 import moment from 'moment';
+import IAvailability from '../interfaces/availability';
 
-const formatAvailability = (date: string, name: string, index: number) => ({
+const formatAvailability = (date: string, name: string, index: string): IAvailability => ({
     id: index,
     title: name,
     allDay: false,

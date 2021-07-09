@@ -43,6 +43,7 @@ function Bookings(props: any) {
                 <div className={classes.logo}>
                     <img src="joovence-logo.png" alt="logo" width="70%" />
                 </div>
+                <h2>Your booking:</h2>
                 {booking && (
                     <Card className={classes.root}>
                         <CardContent>

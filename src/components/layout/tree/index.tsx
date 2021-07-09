@@ -43,13 +43,14 @@ export default function Tree({ filteredItems, openItems, selectedItems, handleSe
                                 <ListItem>
                                     <ListItemIcon>
                                         <IconButton
+                                            role={"selector"}
                                             onClick={() => handleSetSelectedItem(item)}>
                                             {selectedItems.find(i => i.id === item.id) ? <Icon className={classes.red}>check_box_outline</Icon> : <Icon>check_box_outline_blank</Icon>}
                                         </IconButton>
                                     </ListItemIcon>
                                     <ListItemText primary={item.name} />
                                     {item.address && (
-                                        <IconButton onClick={() => handleOpenItems(openItems, item)}>
+                                        <IconButton role={"expand"} onClick={() => handleOpenItems(openItems, item)}>
                                             {openItems[item.id] ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
                                         </IconButton>
                                     )}
